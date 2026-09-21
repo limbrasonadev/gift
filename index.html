@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engr ^^</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #FFF8F5;
+            color: #2B2424;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        @keyframes scrollWheel {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(6px);
+                opacity: 0;
+            }
+        }
+
+        .animate-scroll-wheel {
+            animation: scrollWheel 1.5s ease-in-out infinite;
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Falling petals styling */
+        .petal {
+            position: absolute;
+            background-color: #D94F5C;
+            opacity: 0.65;
+            border-radius: 150% 0 150% 0;
+            animation: fall linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 0.7;
+            }
+
+            85% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(110vh) translateX(80px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Swaying animation for roses */
+        @keyframes sway {
+
+            0%,
+            100% {
+                transform: rotate(-3deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(3deg) translateY(-4px);
+            }
+        }
+
+        .animate-sway {
+            animation: sway 4.5s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        /* Floating animation for envelope & down arrow */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Typewriter blinking cursor */
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #D94F5C;
+            font-weight: 300;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Heart pulsing animation */
+        @keyframes pulse-heart {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .animate-pulse-heart {
+            animation: pulse-heart 1.5s ease-in-out infinite;
+        }
+
+        /* Screen transition utilities */
+        .screen {
+            transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+        }
+
+        /* Custom scrollbar for long letter text */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #FFF8F5;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #F2D6D9;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #D94F5C;
+        }
+
+        /* Courtship buttons smooth dynamic scaling */
+        #accept-btn,
+        #no-btn {
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.35s ease,
+                padding 0.35s ease,
+                font-size 0.35s ease,
+                background-color 0.2s ease,
+                box-shadow 0.2s ease;
+            transform-origin: center center;
+            will-change: transform;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center relative p-4 sm:p-6">
+
+    <div id="petals-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="app-container"
+        class="relative z-10 w-full max-w-lg flex flex-col items-center justify-center text-center transition-opacity duration-700">
+
+        <div id="screen-1" class="screen flex flex-col items-center justify-center py-12 w-full cursor-pointer">
+            <div class="mb-6 text-[#D94F5C] text-4xl animate-pulse-heart">♡</div>
+            <h1 class="font-serif text-3xl sm:text-4xl font-medium text-[#2B2424] mb-4 tracking-wide">
+                A little gift for you ♡
+            </h1>
+            <p class="text-sm sm:text-base text-gray-600 mb-12 font-light">
+                Click or scroll down to unwrap it.
+            </p>
+            <div class="animate-float text-[#D94F5C] opacity-80 mt-4 flex flex-col items-center">
+                <svg class="w-7 h-11 mx-auto" viewBox="0 0 24 36" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="32" rx="10" />
+                    <line x1="12" y1="8" x2="12" y2="14" class="animate-scroll-wheel" />
+                </svg>
+            </div>
+        </div>
+
+        <div id="screen-2" class="screen hidden opacity-0 flex flex-col items-center justify-center py-8 w-full">
+            <div class="mb-6 animate-sway flex items-center justify-center">
+                <img src="flowers.png" alt="Flowers"
+                    class="w-48 sm:w-56 max-h-72 object-contain drop-shadow-md select-none pointer-events-none" />
+            </div>
+
+            <p class="font-serif text-lg sm:text-xl text-[#2B2424] mb-8 italic tracking-wide">
+                🌹 Something I picked just for you.
+            </p>
+
+            <div id="envelope-btn" class="animate-float inline-flex flex-col items-center group cursor-pointer p-4">
+                <div
+                    class="relative w-24 h-16 sm:w-28 sm:h-20 bg-white rounded-xl shadow-md border border-[#F2D6D9] flex items-center justify-center transition-all duration-300 group-hover:shadow-xl group-hover:border-[#D94F5C]">
+                    <svg class="absolute inset-0 w-full h-full text-[#D94F5C]" viewBox="0 0 112 80" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 8L56 48L112 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <rect x="0" y="0" width="112" height="80" rx="10" stroke="currentColor" stroke-width="2.5"
+                            fill="none" />
+                    </svg>
+                    <div
+                        class="absolute -top-3 -right-2 bg-[#D94F5C] text-white rounded-full w-7 h-7 flex items-center justify-center shadow-md animate-pulse-heart">
+                        <span class="text-xs">♥</span>
+                    </div>
+                </div>
+                <span
+                    class="text-xs uppercase tracking-widest text-[#B83245] font-semibold mt-3 opacity-90 group-hover:opacity-100 transition-opacity">
+                    Open Envelope
+                </span>
+            </div>
+        </div>
+
+        <div id="screen-3" class="screen hidden opacity-0 flex flex-col items-center justify-center py-6 w-full">
+            <div
+                class="bg-white text-[#2B2424] shadow-xl border border-[#F5E6E8] rounded-2xl p-6 sm:p-10 w-full text-left relative max-h-[85vh] flex flex-col">
+
+                <button id="download-btn" onclick="downloadLetter()"
+                    class="absolute top-4 right-4 text-[#D94F5C] hover:text-[#B83245] bg-[#FFF8F5] hover:bg-[#F2D6D9] p-2.5 rounded-full transition-all shadow-sm flex items-center justify-center group z-20"
+                    title="Download Letter for Remembrance" aria-label="Download Letter">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    <span
+                        class="absolute -bottom-8 right-0 bg-[#2B2424] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-md">Save
+                        Letter ♡</span>
+                </button>
+
+                <div class="overflow-y-auto max-h-[50vh] pr-2 custom-scrollbar mb-6">
+                    <div id="letter-text" class="font-serif text-base sm:text-lg leading-relaxed whitespace-pre-line">
+                        <span id="typewriter-target" class="typewriter-cursor"></span>
+                    </div>
+                </div>
+
+                <div id="courtship-section"
+                    class="pt-6 border-t border-[#F2D6D9] opacity-0 transition-opacity duration-700 hidden text-center mt-auto">
+                    <p class="font-serif text-xl sm:text-2xl font-semibold text-[#B83245] mb-6">
+                        Will you let me court you?
+                    </p>
+                    <div class="flex items-center justify-center gap-4 flex-wrap min-h-[60px]">
+                        <button id="accept-btn"
+                            class="px-8 py-3 min-w-[130px] bg-[#D94F5C] hover:bg-[#B83245] text-white font-medium rounded-full shadow-md cursor-pointer select-none">
+                            YES ❤️
+                        </button>
+                        <button id="no-btn"
+                            class="px-8 py-3 min-w-[130px] bg-gray-100 hover:bg-gray-200 text-[#2B2424] font-medium rounded-full shadow-sm cursor-pointer select-none">
+                            NO
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen-accept" class="screen hidden opacity-0 flex flex-col items-center justify-center py-6 w-full">
+            <div
+                class="bg-white text-[#2B2424] shadow-xl border border-[#F5E6E8] rounded-2xl p-6 sm:p-8 w-full text-center relative overflow-hidden">
+                <div class="relative w-48 h-48 sm:w-56 sm:h-56 mx-auto mb-6 flex items-center justify-center"
+                    id="heart-target-container">
+                    <svg class="absolute inset-0 w-full h-full text-[#F2D6D9]" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    </svg>
+                    <div id="heart-fill"
+                        class="absolute bottom-0 left-0 right-0 overflow-hidden transition-all duration-1000 flex items-center justify-center"
+                        style="height: 0%;">
+                        <svg class="w-48 h-48 sm:w-56 sm:h-56 text-[#D94F5C]" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                    </div>
+                </div>
+                <div id="memory-label" class="text-sm sm:text-base font-medium text-[#B83245] h-6 mb-4 transition-all">
+                </div>
+                <div id="accept-success" class="opacity-0 transition-opacity duration-1000 hidden">
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[#D94F5C] mb-3">
+                        Thank you for accepting me. ❤️
+                    </h2>
+                    <p class="font-serif text-base sm:text-lg text-gray-700 italic">
+                        I'm really looking forward to getting to know you even more.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen-no" class="screen hidden opacity-0 flex flex-col items-center justify-center py-8 w-full">
+            <div
+                class="bg-white text-[#2B2424] shadow-xl border border-[#F5E6E8] rounded-2xl p-8 sm:p-10 w-full text-center">
+                <div class="text-[#D94F5C] text-3xl mb-4">🤍</div>
+                <h3 class="font-serif text-xl sm:text-2xl font-medium text-[#2B2424] mb-4 leading-relaxed">
+                    I respect your answer. 🤍
+                </h3>
+                <p class="font-serif text-base sm:text-lg text-gray-700 mb-6 leading-relaxed">
+                    Please let me get to know you more,<br>
+                    until the day we're both ready.
+                </p>
+                <p class="text-sm text-gray-500 italic tracking-wide">
+                    No pressure. Just me, still hoping.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="video-modal"
+        class="fixed inset-0 bg-[#2B2424]/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 opacity-0 pointer-events-none transition-opacity duration-400">
+        <div class="bg-white rounded-2xl shadow-2xl p-3 sm:p-4 w-[90vw] md:w-[75vw] max-w-5xl text-center transform scale-95 transition-transform duration-300 flex flex-col items-center"
+            id="video-modal-box">
+            <div class="relative w-full rounded-xl overflow-hidden shadow-lg bg-black mb-3 aspect-video">
+                <video id="harana-video" class="w-full h-full object-cover" controls playsinline>
+                    <source src="your-harana-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <button id="skip-video-btn"
+                class="text-xs uppercase tracking-widest text-gray-500 hover:text-[#D94F5C] font-semibold transition-colors py-1">
+                Skip Video & Continue 💌
+            </button>
+        </div>
+    </div>
+
+    <div id="screen-final-popup"
+        class="screen hidden opacity-0 fixed inset-0 flex flex-col items-center justify-center p-4 bg-[#FFF8F5]/95 backdrop-blur-sm z-50">
+        <div class="bg-white text-[#2B2424] shadow-2xl border border-[#F5E6E8] rounded-2xl p-8 sm:p-12 max-w-md w-full text-center transform scale-95 transition-all duration-700"
+            id="final-popup-box">
+            <div class="text-[#D94F5C] text-4xl mb-4 animate-pulse-heart">♡</div>
+            <h2 class="font-serif text-2xl sm:text-3xl font-medium text-[#B83245] leading-relaxed">
+                I hope you appreciate this little gift
+            </h2>
+            <p class="text-xs tracking-widest uppercase text-gray-400 mt-4 font-semibold">
+                Forever yours, Limuel ♡
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const petalsContainer = document.getElementById('petals-container');
+        const petalCount = 16;
+
+        for (let i = 0; i < petalCount; i++) {
+            createPetal();
+        }
+
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+
+            const size = Math.random() * 10 + 10;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size * 1.4}px`;
+            petal.style.left = `${Math.random() * 100}vw`;
+
+            const duration = Math.random() * 7 + 6;
+            const delay = Math.random() * 8;
+            petal.style.animationDuration = `${duration}s`;
+            petal.style.animationDelay = `${delay}s`;
+            petal.style.backgroundColor = Math.random() > 0.4 ? '#D94F5C' : '#B83245';
+
+            petalsContainer.appendChild(petal);
+
+            petal.addEventListener('animationiteration', () => {
+                petal.style.left = `${Math.random() * 100}vw`;
+            });
+        }
+
+        const screen1 = document.getElementById('screen-1');
+        const screen2 = document.getElementById('screen-2');
+        const screen3 = document.getElementById('screen-3');
+        const screenAccept = document.getElementById('screen-accept');
+        const screenNo = document.getElementById('screen-no');
+        const appContainer = document.getElementById('app-container');
+
+        const envelopeBtn = document.getElementById('envelope-btn');
+        const typewriterTarget = document.getElementById('typewriter-target');
+        const courtshipSection = document.getElementById('courtship-section');
+        const acceptBtn = document.getElementById('accept-btn');
+        const noBtn = document.getElementById('no-btn');
+
+        const heartFill = document.getElementById('heart-fill');
+        const heartTargetContainer = document.getElementById('heart-target-container');
+        const memoryLabel = document.getElementById('memory-label');
+        const acceptSuccess = document.getElementById('accept-success');
+
+        const videoModal = document.getElementById('video-modal');
+        const videoModalBox = document.getElementById('video-modal-box');
+        const haranaVideo = document.getElementById('harana-video');
+        const skipVideoBtn = document.getElementById('skip-video-btn');
+        const bgMusic = document.getElementById('bg-music');
+
+        const finalPopup = document.getElementById('screen-final-popup');
+        const finalPopupBox = document.getElementById('final-popup-box');
+
+        let currentStep = 1;
+
+        function transitionScreens(fromScreen, toScreen) {
+            fromScreen.style.opacity = '0';
+            setTimeout(() => {
+                fromScreen.classList.add('hidden');
+                toScreen.classList.remove('hidden');
+                void toScreen.offsetWidth;
+                toScreen.style.opacity = '1';
+            }, 600);
+        }
+
+        function triggerFinalPopup() {
+            appContainer.style.opacity = '0';
+            setTimeout(() => {
+                appContainer.classList.add('hidden');
+                finalPopup.classList.remove('hidden');
+                void finalPopup.offsetWidth;
+                finalPopup.style.opacity = '1';
+                finalPopupBox.style.transform = 'scale(1)';
+            }, 700);
+        }
+
+        function advanceToRoses() {
+            if (currentStep === 1) {
+                currentStep = 2;
+                transitionScreens(screen1, screen2);
+            }
+        }
+
+        screen1.addEventListener('click', advanceToRoses);
+        window.addEventListener('wheel', (e) => {
+            if (e.deltaY > 0 && currentStep === 1) {
+                advanceToRoses();
+            }
+        }, { passive: true });
+
+        let touchStartY = 0;
+        window.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        window.addEventListener('touchend', (e) => {
+            let touchEndY = e.changedTouches[0].clientY;
+            if (touchStartY - touchEndY > 50 && currentStep === 1) {
+                advanceToRoses();
+            }
+        }, { passive: true });
+
+        // Envelope Click -> Open Harana Video Modal & Play Video
+        envelopeBtn.addEventListener('click', () => {
+            videoModal.classList.remove('opacity-0', 'pointer-events-none');
+            videoModalBox.style.transform = 'scale(1)';
+            haranaVideo.currentTime = 0;
+            haranaVideo.muted = false;
+            haranaVideo.play().catch(err => console.log("Autoplay prevented by browser:", err));
+        });
+
+        function proceedToLetter() {
+            haranaVideo.pause();
+            haranaVideo.currentTime = 0;
+            videoModal.classList.add('opacity-0', 'pointer-events-none');
+            videoModalBox.style.transform = 'scale(0.95)';
+
+            // START BACKGROUND MUSIC HERE (After Video ends/skips)
+            bgMusic.volume = 0.5;
+            bgMusic.play().catch(err => console.log("Background music autoplay prevented:", err));
+
+            currentStep = 3;
+            transitionScreens(screen2, screen3);
+            setTimeout(startTypewriter, 700);
+        }
+
+        haranaVideo.addEventListener('ended', proceedToLetter);
+        skipVideoBtn.addEventListener('click', proceedToLetter);
+
+        const letterMessage = `My love,
+I've been wanting to tell you something...
+
+Every single moment spent with you feels effortless and warm. Your smile brightens my days, and your presence brings a peace I never knew I was missing. 
+
+(You can add as many paragraphs as you like here, and the design will stay perfectly neat with a clean scrollbar!)`;
+
+        let typingTimeout = null;
+
+        function startTypewriter() {
+            let charIndex = 0;
+            const speed = 28;
+
+            function typeChar() {
+                if (charIndex < letterMessage.length) {
+                    let currentChar = letterMessage.charAt(charIndex);
+                    if (currentChar === '\n') {
+                        typewriterTarget.innerHTML += '<br>';
+                    } else {
+                        typewriterTarget.innerHTML += escapeHtml(currentChar);
+                    }
+                    charIndex++;
+                    typingTimeout = setTimeout(typeChar, speed);
+                } else {
+                    typewriterTarget.classList.remove('typewriter-cursor');
+                    courtshipSection.classList.remove('hidden');
+                    void courtshipSection.offsetWidth;
+                    courtshipSection.style.opacity = '1';
+                }
+            }
+
+            typeChar();
+        }
+
+        const letterTextContainer = document.getElementById('letter-text');
+        if (letterTextContainer) {
+            letterTextContainer.addEventListener('click', () => {
+                if (courtshipSection.classList.contains('hidden')) {
+                    clearTimeout(typingTimeout);
+                    typewriterTarget.innerHTML = escapeHtml(letterMessage).replace(/\n/g, '<br>');
+                    typewriterTarget.classList.remove('typewriter-cursor');
+                    courtshipSection.classList.remove('hidden');
+                    void courtshipSection.offsetWidth;
+                    courtshipSection.style.opacity = '1';
+                }
+            });
+        }
+
+        function downloadLetter() {
+            const remembranceText = `${letterMessage}\n\nForever yours,\nLimuel ♡`;
+            const blob = new Blob([remembranceText], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'A_Letter_For_You_Limuel.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        let noClicks = 0;
+        const maxNoClicks = 5;
+
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            noClicks++;
+
+            if (noClicks < maxNoClicks) {
+                // Progressively decrease No button size
+                const noScale = Math.max(0.15, 1 - (noClicks * 0.2));
+                const yesScale = 1 + (noClicks * 0.08);
+
+                noBtn.style.transform = `scale(${noScale})`;
+                noBtn.style.padding = `${Math.max(4, 12 - noClicks * 2)}px ${Math.max(12, 32 - noClicks * 4)}px`;
+                noBtn.style.fontSize = `${Math.max(10, 16 - noClicks * 1.5)}px`;
+
+                // Yes button grows smoothly
+                acceptBtn.style.transform = `scale(${yesScale})`;
+            } else {
+                // Completely shrink and remove No button so only Yes button is left
+                noBtn.style.transform = 'scale(0)';
+                noBtn.style.opacity = '0';
+                noBtn.style.pointerEvents = 'none';
+
+                acceptBtn.style.transform = 'scale(1.3)';
+                acceptBtn.classList.add('shadow-xl');
+
+                setTimeout(() => {
+                    noBtn.style.display = 'none';
+                }, 350);
+            }
+        });
+
+        // Memories with your pictures
+        const memories = [
+            { text: "our first picture in LCS.", img: "photo_1.jpg" },
+            { text: "second meet at the church anniversary service.", img: "photo_2.jpeg" },
+            { text: "third meet at our church anniversary.", img: "photo_4.jpeg" },
+            { text: "my fav picture of yours.", img: "photo_3.jpeg" }
+        ];
+
+        acceptBtn.addEventListener('click', () => {
+            currentStep = 4;
+            transitionScreens(screen3, screenAccept);
+            runMemoryAnimation();
+        });
+
+        function runMemoryAnimation() {
+            let index = 0;
+
+            function showNextMemory() {
+                if (index < memories.length) {
+                    const memory = memories[index];
+                    memoryLabel.textContent = memory.text;
+
+                    // Create the large memory card in the center with smooth entry styling
+                    const card = document.createElement('div');
+                    card.className = 'fixed inset-0 m-auto w-80 h-96 sm:w-96 sm:h-[420px] bg-white p-6 rounded-3xl shadow-2xl z-50 flex flex-col items-center justify-center border border-[#F2D6D9]';
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8) translateY(30px)';
+                    card.style.transition = 'transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+                    card.style.willChange = 'transform, opacity';
+
+                    card.innerHTML = `
+                        <div class="w-full h-72 sm:h-80 rounded-2xl overflow-hidden bg-gray-50 mb-4 shadow-inner">
+                            <img src="${memory.img}" alt="Memory" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'">
+                        </div>
+                        <span class="text-sm sm:text-base font-semibold text-[#B83245] text-center leading-relaxed font-serif">${memory.text}</span>
+                    `;
+                    document.body.appendChild(card);
+
+                    // Trigger smooth entry transition using a short frame delay
+                    setTimeout(() => {
+                        card.style.transform = 'scale(1) translateY(0)';
+                        card.style.opacity = '1';
+                    }, 50);
+
+                    // Hold in center so she can admire it, then butter-smooth glide into the heart
+                    setTimeout(() => {
+                        const heartRect = heartTargetContainer.getBoundingClientRect();
+                        const cardRect = card.getBoundingClientRect();
+
+                        const targetX = (heartRect.left + heartRect.width / 2) - (cardRect.left + cardRect.width / 2);
+                        const targetY = (heartRect.top + heartRect.height / 2) - (cardRect.top + cardRect.height / 2);
+
+                        card.style.transition = 'transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease-in';
+                        card.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.1) rotate(15deg)`;
+                        card.style.opacity = '0';
+
+                        // Fill heart increment smoothly
+                        const fillPercent = (index + 1) * 25;
+                        heartFill.style.height = `${fillPercent}%`;
+
+                        setTimeout(() => {
+                            card.remove();
+                            index++;
+                            setTimeout(showNextMemory, 400);
+                        }, 1200);
+                    }, 2000);
+
+                } else {
+                    memoryLabel.style.display = 'none';
+
+                    setTimeout(() => {
+                        acceptSuccess.classList.remove('hidden');
+                        void acceptSuccess.offsetWidth;
+                        acceptSuccess.style.opacity = '1';
+
+                        setTimeout(() => {
+                            triggerFinalPopup();
+                        }, 10000);
+                    }, 400);
+                }
+            }
+
+            setTimeout(showNextMemory, 500);
+        }
+    </script>
+</body>
+
+</html>
